@@ -10,19 +10,34 @@ fn trial_division(n: u64) -> Vec<u64>
             if n / i != i { divisors.push(n / i); }
         }
     }
-    divisors.sort();
-    return divisors;
+    divisors.sort_unstable();
+    divisors
 }
 
 fn main()
 {
+    // Collect the supplied arguments.
     let args: Vec<String> = std::env::args().collect();
+
+    // Check if the number of arguments is insufficient.
     if args.len() <= 1
     {
-        println!("Usage: divisors <integral>");
-        std::process::exit(1);
+        panic!("Usage: divisors <integral>");
     }
-    for div in trial_division(args[1].parse::<u64>().unwrap()).iter()
+
+    // Try to convert the second argument to an integral.
+    let integral: u64 = match args[1].parse()
+    {
+        Ok(num) => num,
+        Err(err) => match err.kind()
+        {
+            std::num::IntErrorKind::InvalidDigit => panic!("Error: Input provided is not an integral"),
+            std::num::IntErrorKind::PosOverflow => panic!("Error: Integral provided is too large"),
+            other_err => panic!("Error: {:?}", other_err),
+        },
+    };
+
+    for div in trial_division(integral).iter()
     {
         println!("{}", div);
     }
