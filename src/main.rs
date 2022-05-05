@@ -3,7 +3,7 @@ fn main()
     // Collect the supplied arguments.
     let args: Vec<String> = std::env::args().collect();
 
-    // Create a new config.
+    // Create a new config with supplied arguments.
     let config = Config::new(&args);
 
     // Print each divisor.
@@ -47,6 +47,12 @@ impl Config
 
         let integral = &args[1];
 
+        if integral.contains("-")
+        {
+            println!("Error: Negative integrals are not supported");
+            std::process::exit(1);
+        }
+
         let integral: u64 = match integral.parse()
         {
             Ok(value) => value,
@@ -68,7 +74,6 @@ impl Config
                 },
             },
         };
-
         Config { integral }
     }
 }
