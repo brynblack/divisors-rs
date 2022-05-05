@@ -1,3 +1,18 @@
+fn main()
+{
+    // Collect the supplied arguments.
+    let args: Vec<String> = std::env::args().collect();
+
+    // Create a new config.
+    let config = Config::new(&args);
+
+    // Print each divisor.
+    for div in trial_division(config.integral).iter()
+    {
+        println!("{}", div);
+    }
+}
+
 fn trial_division(n: u64) -> Vec<u64>
 {
     let mut divisors = Vec::new();
@@ -14,31 +29,46 @@ fn trial_division(n: u64) -> Vec<u64>
     divisors
 }
 
-fn main()
+
+struct Config
 {
-    // Collect the supplied arguments.
-    let args: Vec<String> = std::env::args().collect();
+    integral: u64,
+}
 
-    // Check if the number of arguments is insufficient.
-    if args.len() <= 1
+impl Config
+{
+    fn new(args: &[String]) -> Config
     {
-        panic!("Usage: divisors <integral>");
-    }
-
-    // Try to convert the second argument to an integral.
-    let integral: u64 = match args[1].parse()
-    {
-        Ok(num) => num,
-        Err(err) => match err.kind()
+        if args.len() < 2
         {
-            std::num::IntErrorKind::InvalidDigit => panic!("Error: Input provided is not an integral"),
-            std::num::IntErrorKind::PosOverflow => panic!("Error: Integral provided is too large"),
-            other_err => panic!("Error: {:?}", other_err),
-        },
-    };
+            println!("Usage: divisors <integral>");
+            std::process::exit(1);
+        }
 
-    for div in trial_division(integral).iter()
-    {
-        println!("{}", div);
+        let integral = &args[1];
+
+        let integral: u64 = match integral.parse()
+        {
+            Ok(value) => value,
+            Err(err) => match err.kind()
+            {
+                std::num::IntErrorKind::PosOverflow | std::num::IntErrorKind::NegOverflow =>
+                {
+                    println!("Error: Integral provided is too large");
+                    std::process::exit(1);
+                },
+                std::num::IntErrorKind::InvalidDigit =>
+                {
+                    println!("Error: Argument provided is not an integral");
+                    std::process::exit(1);
+                },
+                other_err =>
+                {
+                    panic!("Error: {:?}", other_err);
+                },
+            },
+        };
+
+        Config { integral }
     }
 }
