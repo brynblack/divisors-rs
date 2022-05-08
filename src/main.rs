@@ -21,7 +21,7 @@ impl Config {
                     println!("Error: Argument provided is not a positive integral");
                     std::process::exit(1);
                 },
-                std::num::IntErrorKind::PosOverflow | std::num::IntErrorKind::NegOverflow => {
+                std::num::IntErrorKind::PosOverflow => {
                     println!("Error: Integral provided is too large");
                     std::process::exit(1);
                 },
