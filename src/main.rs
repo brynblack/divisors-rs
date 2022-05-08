@@ -1,7 +1,9 @@
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     let config = Config::new(&args);
-    trial_division(config.integral).iter().for_each(|div| { println!("{}", div); });
+    trial_division(config.integral).iter().for_each(|div| {
+        println!("{}", div);
+    });
 }
 
 struct Config {
@@ -20,14 +22,14 @@ impl Config {
                 std::num::IntErrorKind::InvalidDigit => {
                     println!("Error: Argument provided is not a positive integral");
                     std::process::exit(1);
-                },
+                }
                 std::num::IntErrorKind::PosOverflow => {
                     println!("Error: Integral provided is too large");
                     std::process::exit(1);
-                },
+                }
                 other_err => {
                     panic!("Error: {:?}", other_err);
-                },
+                }
             },
         };
         Config { integral }
@@ -40,7 +42,9 @@ fn trial_division(n: u64) -> Vec<u64> {
     for i in 1..=limit {
         if n % i == 0 {
             divisors.push(i);
-            if n / i != i { divisors.push(n / i); }
+            if n / i != i {
+                divisors.push(n / i);
+            }
         }
     }
     divisors.sort_unstable();
