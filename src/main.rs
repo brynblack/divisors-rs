@@ -1,6 +1,18 @@
+use std::env;
+use std::num;
+use std::process;
+
 fn main() {
-    let args: Vec<String> = std::env::args().collect();
-    let config = Config::new(&args);
+    // Collect provided arguments into vector
+    let args: Vec<String> = env::args().collect();
+
+    // Create a new config
+    let config = Config::new(&args).unwrap_or_else(|err| {
+        eprintln!("Error: {}", err);
+        process::exit(1);
+    });
+
+    // Print out each divisor of the given integral
     trial_division(config.integral).iter().for_each(|div| {
         println!("{}", div);
     });
@@ -11,28 +23,26 @@ struct Config {
 }
 
 impl Config {
-    fn new(args: &[String]) -> Config {
+    fn new(args: &[String]) -> Result<Config, &'static str> {
         if args.len() < 2 {
-            println!("Usage: divisors <integral>");
-            std::process::exit(1);
+            return Err("Usage: divisors <integral>");
         }
         let integral: u64 = match args[1].parse() {
             Ok(num) => num,
             Err(err) => match err.kind() {
-                std::num::IntErrorKind::InvalidDigit => {
-                    println!("Error: Argument provided is not a positive integral");
-                    std::process::exit(1);
+                num::IntErrorKind::InvalidDigit => {
+                    return Err("Argument provided is not a positive integral");
                 }
-                std::num::IntErrorKind::PosOverflow => {
-                    println!("Error: Integral provided is too large");
-                    std::process::exit(1);
+                num::IntErrorKind::PosOverflow => {
+                    return Err("Integral provided is too large");
                 }
                 other_err => {
-                    panic!("Error: {:?}", other_err);
+                    // TODO: Replace with "return Err(...)" somehow
+                    panic!("{:?}", other_err);
                 }
             },
         };
-        Config { integral }
+        Ok(Config { integral })
     }
 }
 
