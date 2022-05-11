@@ -79,4 +79,10 @@ mod tests {
         ];
         assert_eq!(Config::new(&args).is_err(), true);
     }
+
+    #[test]
+    fn no_arguments() {
+        let args: Vec<String> = vec!["path_to_the_program".to_string()];
+        assert_eq!(Config::new(&args).is_err(), true);
+    }
 }
