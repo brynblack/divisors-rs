@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "divisors-rs"
-version = "1.3.2"
+name = "divisors_rs"
+version = "1.4.2"
