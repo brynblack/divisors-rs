@@ -12,7 +12,7 @@ impl Config {
             return Err("Usage: divisors <integral>".into());
         }
 
-        // Parse the 2nd argument to an integral
+        // Parse the 2nd argument into an integral
         let integral: u64 = match args[1].parse() {
             Ok(num) => num,
             Err(err) => {
