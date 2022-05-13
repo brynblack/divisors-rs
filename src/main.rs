@@ -1,7 +1,7 @@
 use std::env;
 use std::process;
 
-use divisors_rs::algos;
+use divisors_rs::algorithms;
 use divisors_rs::Config;
 
 fn main() {
@@ -15,7 +15,7 @@ fn main() {
     });
 
     // Print out each divisor of the given integral
-    algos::trial_division(config.integral)
+    algorithms::trial_division(config.integral)
         .iter()
         .for_each(|div| {
             println!("{}", div);

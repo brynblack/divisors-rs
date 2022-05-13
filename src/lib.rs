@@ -30,7 +30,7 @@ impl Config {
     }
 }
 
-pub mod algos {
+pub mod algorithms {
     pub fn trial_division(n: u64) -> Vec<u64> {
         let mut divisors: Vec<u64> = Vec::new();
         let limit = (n as f64).sqrt() as u64;
