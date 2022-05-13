@@ -1,6 +1,10 @@
 [package]
 name = "divisors_rs"
 version = "1.5.4"
+authors = ["Brynley Llewellyn-Roux"]
 edition = "2021"
+description = "A CLI application to calculate the divisors of a given integral."
+repository = "https://github.com/brynblack/divisors-rs"
+license = "MIT"
 
 [dependencies]
