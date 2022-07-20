@@ -1,6 +1,6 @@
 [package]
 name = "divisors-rs"
-version = "1.7.4"
+version = "1.7.5"
 authors = ["Brynley Llewellyn-Roux"]
 edition = "2021"
 description = "A CLI application to calculate the divisors of a given integral."

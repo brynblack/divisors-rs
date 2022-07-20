@@ -1,11 +1,14 @@
+//! A module for parsing command line arguments into a configuration.
 use std::error::Error;
 use std::num;
 
+/// A struct to store the configuration.
 pub struct Config {
     pub integral: u64,
 }
 
 impl Config {
+    /// Returns a new config with the supplied arguments.
     pub fn new(args: &[String]) -> Result<Config, Box<dyn Error>> {
         // Check if an insufficient number of arguments were provided
         if args.len() < 2 {
