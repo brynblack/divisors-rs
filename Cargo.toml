@@ -1,10 +1,14 @@
 [package]
 name = "divisors-rs"
-version = "1.7.5"
+version = "1.7.6"
 authors = ["Brynley Llewellyn-Roux"]
 edition = "2021"
 description = "A CLI application to calculate the divisors of a given integral."
 repository = "https://github.com/brynblack/divisors-rs"
 license = "MIT"
 
-[dependencies]
+[profile.release]
+codegen-units = 1
+lto = true
+panic = "abort"
+strip = true

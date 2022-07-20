@@ -1,3 +1,5 @@
+//! A module containing algorithms that can be used for calculating the divisors of an integral.
+
 /// Implementation of the trial division algorithm.
 pub fn trial_division(n: u64) -> Vec<u64> {
     let mut divisors: Vec<u64> = Vec::new();
